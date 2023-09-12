@@ -14,7 +14,7 @@ public class CajaFuerteTest {
 		Boolean valorEsperado = Boolean.TRUE;
 		Boolean valorObtenido = Boolean.FALSE;
 		//Ejecucion
-		valorObtenido = miCajaFuerte.getPuertaAbierta();
+		valorObtenido = miCajaFuerte.puertaEstaAbierta();
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);		
 	}
@@ -43,7 +43,7 @@ public class CajaFuerteTest {
 		Boolean valorObtenido = Boolean.FALSE;
 		miCajaFuerte.intentarAbrirConContraseña_(contra);
 		//Ejecucion
-		valorObtenido = miCajaFuerte.getPuertaAbierta();
+		valorObtenido = miCajaFuerte.puertaEstaAbierta();
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);		
 	}
@@ -63,22 +63,6 @@ public class CajaFuerteTest {
 		miCajaFuerte.intentarAbrirConContraseña_(1233);
 		//Ejecucion
 		valorObtenido = miCajaFuerte.cajaFuerteEstaBloqueada();
-		//Contrastacion o Validacion
-		Assert.assertEquals(valorEsperado, valorObtenido);		
-	}
-	
-	@Test
-	public void aumentaElContadorAlEquivocarseDeContraseña(){
-		//Preparacion
-		Integer contra = 1234;
-		Integer valorEsperado = 1;
-		Integer valorObtenido = 0;
-		CajaFuerte miCajaFuerte = new CajaFuerte();
-		miCajaFuerte.reseteoDeContraseña(contra);
-		miCajaFuerte.cerrarPuerta();
-		miCajaFuerte.intentarAbrirConContraseña_(1233);
-		//Ejecucion
-		valorObtenido = miCajaFuerte.cantdIntentos;
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);		
 	}

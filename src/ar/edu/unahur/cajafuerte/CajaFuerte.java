@@ -3,12 +3,14 @@ package ar.edu.unahur.cajafuerte;
 public class CajaFuerte {
 	private Boolean puertaAbierta = Boolean.TRUE;
 	private Integer contraseña;
-	public Integer cantdIntentos = 0;
+	private Integer cantdIntentos = 0;
 
 
-	public Boolean cajaFuerteEstaBloqueada() {return this.cantdIntentos >= 3;}
+	public Boolean cajaFuerteEstaBloqueada() {
+		return this.cantdIntentos >= 3;
+	}
 	
-	public Boolean getPuertaAbierta() { 
+	public Boolean puertaEstaAbierta() { 
 		Boolean puertaAbierta = this.puertaAbierta;
 		return puertaAbierta;
 	}
