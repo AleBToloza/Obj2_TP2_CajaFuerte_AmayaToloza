@@ -8,9 +8,6 @@ import ar.edu.unahur.cajafuerte.CajaFuerte;
 public class CajaFuerteTest {
 
 	@Test
-	public void test() {}
-
-	@Test
 	public void alCrearUnaCajaFuerteLaPuertaEstaAbierta() {
 		//Preparacion
 		CajaFuerte miCajaFuerte = new CajaFuerte();
@@ -44,8 +41,9 @@ public class CajaFuerteTest {
 		miCajaFuerte.cerrarPuerta();
 		Boolean valorEsperado = Boolean.TRUE;
 		Boolean valorObtenido = Boolean.FALSE;
+		miCajaFuerte.intentarAbrirConContraseña_(contra);
 		//Ejecucion
-		valorObtenido = miCajaFuerte.intentarAbrirConContraseña_(contra);
+		valorObtenido = miCajaFuerte.getPuertaAbierta();
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);		
 	}
@@ -58,28 +56,29 @@ public class CajaFuerteTest {
 		miCajaFuerte.reseteoDeContraseña(contra);
 		miCajaFuerte.cerrarPuerta();
 		Boolean valorEsperado = Boolean.TRUE;
-		Boolean valorObtenido = Boolean.FALSE;
+		Boolean valorObtenido;
 		miCajaFuerte.intentarAbrirConContraseña_(1233);
 		miCajaFuerte.intentarAbrirConContraseña_(1233);
 		miCajaFuerte.intentarAbrirConContraseña_(1233);
 		miCajaFuerte.intentarAbrirConContraseña_(1233);
 		//Ejecucion
-		valorObtenido = miCajaFuerte.getEstaBloqueada();
+		valorObtenido = miCajaFuerte.cajaFuerteEstaBloqueada();
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);		
 	}
 	
 	@Test
-	public void cajaAlIngresarTresVecesContraseñaIncorrecta(){
+	public void aumentaElContadorAlEquivocarseDeContraseña(){
 		//Preparacion
 		Integer contra = 1234;
+		Integer valorEsperado = 1;
+		Integer valorObtenido = 0;
 		CajaFuerte miCajaFuerte = new CajaFuerte();
 		miCajaFuerte.reseteoDeContraseña(contra);
 		miCajaFuerte.cerrarPuerta();
-		Integer valorEsperado = 1;
-		Integer valorObtenido = 0;
+		miCajaFuerte.intentarAbrirConContraseña_(1233);
 		//Ejecucion
-		valorObtenido = miCajaFuerte.intentarAbrirConContraseña_(1233);
+		valorObtenido = miCajaFuerte.cantdIntentos;
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);		
 	}
