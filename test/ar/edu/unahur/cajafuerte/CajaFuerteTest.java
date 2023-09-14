@@ -3,8 +3,6 @@ package ar.edu.unahur.cajafuerte;
 import org.junit.Assert;
 import org.junit.Test;
 
-import ar.edu.unahur.cajafuerte.CajaFuerte;
-
 public class CajaFuerteTest {
 
 	@Test
@@ -27,9 +25,10 @@ public class CajaFuerteTest {
 		Boolean valorEsperado = Boolean.FALSE;
 		Boolean valorObtenido = Boolean.TRUE;
 		//Ejecucion
-		valorObtenido = miCajaFuerte.reseteoDeContraseña(contra);
+		miCajaFuerte.reseteoDeContraseña(contra);
+		valorObtenido = miCajaFuerte.getPuertaAbierta();
 		//Contrastacion o Validacion
-		Assert.assertEquals(valorEsperado, valorObtenido);		
+		Assert.assertEquals(valorEsperado, valorObtenido);
 	}
 	
 	@Test
@@ -46,9 +45,43 @@ public class CajaFuerteTest {
 	}
 	
 	@Test
+	public void bloquearCajaFuerte(){
+		//Preparacion
+		CajaFuerte miCajaFuerte = new CajaFuerte();
+		Boolean valorEsperado = Boolean.TRUE;
+		Boolean valorObtenido;
+		Integer contador = 0;
+		miCajaFuerte.reseteoDeContraseña(1111);
+		
+		//ejecución
+		while (contador <= 4 ) {
+			miCajaFuerte.abrirConContraseña_(1234);
+			contador++;
+		}
+		valorObtenido = miCajaFuerte.getEstadoDeBloqueo();
+		//Contrastacion o validacion
+		Assert.assertEquals(valorEsperado, valorObtenido);
+	}
+	
+	@Test
 	public void ingresoIncorrectoDeContraDeCincoDigitos() {
 		//Preparacion
 		Integer contra = 12345;
+		CajaFuerte miCajaFuerte = new CajaFuerte();
+		miCajaFuerte.usarLlaveMaestra();
+		miCajaFuerte.reseteoDeContraseña(contra);
+		miCajaFuerte.cerrarPuerta();
+		Boolean valorEsperado = Boolean.FALSE;
+		Boolean valorObtenido = Boolean.TRUE;
+		valorObtenido = miCajaFuerte.correctaCantdDigitos(contra);
+		//Contrastacion o Validacion
+		Assert.assertEquals(valorEsperado, valorObtenido);
+	}
+	
+	@Test
+	public void ingresoIncorrectoDeContraDeTresDigitos() {
+		//Preparacion
+		Integer contra = 123;
 		CajaFuerte miCajaFuerte = new CajaFuerte();
 		miCajaFuerte.usarLlaveMaestra();
 		miCajaFuerte.reseteoDeContraseña(contra);
@@ -69,7 +102,8 @@ public class CajaFuerteTest {
 		Boolean valorEsperado = Boolean.TRUE;
 		Boolean valorObtenido = Boolean.FALSE;
 		//Ejecucion
-		valorObtenido = miCajaFuerte.reseteoDeContraseña(contra);
+		miCajaFuerte.reseteoDeContraseña(contra);
+		valorObtenido = miCajaFuerte.getPuertaAbierta();
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);		
 	}
@@ -119,7 +153,7 @@ public class CajaFuerteTest {
 		miCajaFuerte.reseteoDeContraseña(contra);
 		miCajaFuerte.cerrarPuerta();
 		Boolean valorEsperado = Boolean.TRUE;
-		Boolean valorObtenido = Boolean.FALSE;
+		Boolean valorObtenido ;
 		miCajaFuerte.abrirConContraseña_(contraIncorrecta);
 		miCajaFuerte.abrirConContraseña_(contraIncorrecta);
 		miCajaFuerte.abrirConContraseña_(contra);
@@ -139,33 +173,15 @@ public class CajaFuerteTest {
 		miCajaFuerte.reseteoDeContraseña(contra);
 		miCajaFuerte.cerrarPuerta();
 		Boolean valorEsperado = Boolean.FALSE;
-		Boolean valorObtenido = Boolean.TRUE;
-		while (!miCajaFuerte.getEstadoDeBloqueo()) {
+		Boolean valorObtenido;
+		Integer contador = 0;
+		while (contador <= 4) {
 			miCajaFuerte.abrirConContraseña_(contraIncorrecta);
+			contador++;
 		}
 		miCajaFuerte.abrirConContraseña_(contra);
 		//Ejecucion
 		valorObtenido = miCajaFuerte.getPuertaAbierta();
-		//Contrastacion o Validacion
-		Assert.assertEquals(valorEsperado, valorObtenido);		
-	}
-	
-	@Test
-	public void bloquearCajaAlIngresarTresVecesContraseñaIncorrecta(){
-		//Preparacion
-		Integer contra = 1234;
-		Integer contraIncorrecta = 4321;
-		CajaFuerte miCajaFuerte = new CajaFuerte();
-		miCajaFuerte.usarLlaveMaestra();
-		miCajaFuerte.reseteoDeContraseña(contra);
-		miCajaFuerte.cerrarPuerta();
-		Boolean valorEsperado = Boolean.TRUE;
-		Boolean valorObtenido = Boolean.FALSE;
-		while (!miCajaFuerte.getEstadoDeBloqueo()) {
-			miCajaFuerte.abrirConContraseña_(contraIncorrecta);
-		}
-		//Ejecucion
-		valorObtenido = miCajaFuerte.getEstadoDeBloqueo();
 		//Contrastacion o Validacion
 		Assert.assertEquals(valorEsperado, valorObtenido);		
 	}
